@@ -8,28 +8,67 @@ Each file is expected to contain a Site Location Sheet, a Drill Log, pumping tes
 
 ## Installation
 
-Requires [uv](https://docs.astral.sh/uv/getting-started/installation/), which installs Python and the dependencies.
+The app runs on Windows, macOS and Linux. You need [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/getting-started/installation/); uv installs Python and the dependencies for you.
 
+### Windows (PowerShell)
+
+Install uv, then close and reopen PowerShell so the `uv` command is found:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
+
+Get the app and install its dependencies:
+
+```powershell
 git clone https://github.com/chammika/drill-data-extactor.git
 cd drill-data-extactor
 uv sync
 ```
 
-Set an API key for the extraction engine you want to use:
+### macOS and Linux
 
+Install uv, then open a new terminal so the `uv` command is found:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-export ANTHROPIC_API_KEY=...   # Claude (default)
-export GEMINI_API_KEY=...      # Gemini
+
+Get the app and install its dependencies:
+
+```bash
+git clone https://github.com/chammika/drill-data-extactor.git
+cd drill-data-extactor
+uv sync
 ```
+
+If you don't have Git, download the repository as a ZIP from GitHub (**Code > Download ZIP**), unzip it, and run `uv sync` inside the folder.
 
 ## Running
 
-```
+Set an API key for the extraction engine you want to use, then start the app from the project folder. The key only applies to the terminal window you set it in.
+
+### Windows (PowerShell)
+
+```powershell
+$env:ANTHROPIC_API_KEY = "..."   # Claude (default)
+$env:GEMINI_API_KEY = "..."      # Gemini
 uv run streamlit run app.py
 ```
 
-The app opens in your browser. To start with Gemini selected, run `EXTRACTOR=gemini uv run streamlit run app.py`. The Gemini model can be changed with `GEMINI_MODEL=<model id>`.
+To start with Gemini selected, run `$env:EXTRACTOR = "gemini"` first. The Gemini model can be changed with `$env:GEMINI_MODEL = "<model id>"`.
+
+### macOS and Linux
+
+```bash
+export ANTHROPIC_API_KEY=...   # Claude (default)
+export GEMINI_API_KEY=...      # Gemini
+uv run streamlit run app.py
+```
+
+To start with Gemini selected, run `export EXTRACTOR=gemini` first. The Gemini model can be changed with `export GEMINI_MODEL=<model id>`.
+
+On every system the app opens in your browser at http://localhost:8501. Press Ctrl+C in the terminal to stop it.
 
 ## Usage
 
